@@ -156,7 +156,7 @@ async function proxyFetch(url: string, options?: any) {
  * Call the Capy backend to generate the context using the hosted API key.
  */
 async function generateHostedContext(messages: Message[]): Promise<string> {
-  const API_URL = "http://64.227.144.9:3000/api/context/generate";
+  const API_URL = "http://64.227.144.9:3001/api/context/generate";
   
   const response = await proxyFetch(API_URL, {
     method: "POST",
@@ -196,7 +196,7 @@ async function generateHostedContext(messages: Message[]): Promise<string> {
  * Get remaining hosted quota from the backend.
  */
 export async function getHostedQuota(): Promise<number> {
-  const API_URL = "http://64.227.144.9:3000/api/context/quota";
+  const API_URL = "http://64.227.144.9:3001/api/context/quota";
   try {
     const response = await proxyFetch(API_URL);
     if (!response.ok) return 0;
