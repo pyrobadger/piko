@@ -42,6 +42,19 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     });
     return true;
   }
+
+  if (message.type === "FETCH_PROXY") {
+    const { url, options } = message;
+    fetch(url, options)
+      .then(async (res) => {
+        const text = await res.text();
+        sendResponse({ success: true, status: res.status, text });
+      })
+      .catch((err) => {
+        sendResponse({ success: false, error: err.message });
+      });
+    return true; // async
+  }
 });
 
 console.debug("[Capy] Service worker initialized");

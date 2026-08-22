@@ -7,7 +7,7 @@ export default defineManifest({
   description:
     "Export Claude.ai conversations to clean Markdown. Select entire conversations, specific messages, or ranges.",
   permissions: ["storage", "activeTab"],
-  host_permissions: ["https://claude.ai/*"],
+  host_permissions: ["https://claude.ai/*", "http://64.227.144.9/*"],
   background: {
     service_worker: "src/background/service-worker.ts",
     type: "module",

@@ -131,12 +131,34 @@ async function generateSingle(messages: Message[], options: GenerationOptions): 
 }
 
 /**
+ * Proxy fetch through the background script to avoid Mixed Content (HTTPS -> HTTP) blocking.
+ */
+async function proxyFetch(url: string, options?: any) {
+  const result = await chrome.runtime.sendMessage({
+    type: "FETCH_PROXY",
+    url,
+    options
+  });
+  
+  if (!result.success) {
+    throw new Error(result.error);
+  }
+
+  return {
+    ok: result.status >= 200 && result.status < 300,
+    status: result.status,
+    text: async () => result.text,
+    json: async () => JSON.parse(result.text)
+  };
+}
+
+/**
  * Call the Capy backend to generate the context using the hosted API key.
  */
 async function generateHostedContext(messages: Message[]): Promise<string> {
   const API_URL = "http://64.227.144.9:3000/api/context/generate";
   
-  const response = await fetch(API_URL, {
+  const response = await proxyFetch(API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -176,7 +198,7 @@ async function generateHostedContext(messages: Message[]): Promise<string> {
 export async function getHostedQuota(): Promise<number> {
   const API_URL = "http://64.227.144.9:3000/api/context/quota";
   try {
-    const response = await fetch(API_URL);
+    const response = await proxyFetch(API_URL);
     if (!response.ok) return 0;
     const data = await response.json();
     return typeof data.remaining === "number" ? data.remaining : 0;
