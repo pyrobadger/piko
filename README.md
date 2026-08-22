@@ -1,8 +1,8 @@
-# ContextPort
+# Piko
 
 > Export Claude.ai conversations to clean Markdown — instantly, privately, entirely in your browser.
 
-ContextPort is a Chrome extension that lets you export any Claude.ai conversation as a well-formatted Markdown file. Select the entire conversation, pick specific messages, or choose a range.
+Piko is a Chrome extension that lets you export any Claude.ai conversation as a well-formatted Markdown file. Select the entire conversation, pick specific messages, or choose a range.
 
 **Zero configuration required.** No accounts, no servers, no API keys for basic export.
 
@@ -20,8 +20,8 @@ ContextPort is a Chrome extension that lets you export any Claude.ai conversatio
 
 1. Clone this repo:
    ```bash
-   git clone https://github.com/adityaraj/contextport.git
-   cd contextport
+   git clone https://github.com/adityaraj/piko.git
+   cd piko
    ```
 
 2. Install dependencies and build:
