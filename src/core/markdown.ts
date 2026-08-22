@@ -55,7 +55,8 @@ function generateHeader(conversation: Conversation): string {
   const lines: string[] = [];
 
   if (conversation.title) {
-    lines.push(`# ${conversation.title}`);
+    const cleanTitle = conversation.title.replace(/\n/g, " ").trim();
+    lines.push(`# ${cleanTitle}`);
   } else {
     lines.push("# Conversation Export");
   }

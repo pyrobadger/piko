@@ -168,7 +168,7 @@
   text-align: center;
   padding: 10px 0;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--cp-text-secondary);
   border-radius: 6px;
   border: 1px solid transparent;
@@ -177,7 +177,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 10px;
 }
 
 .cp-format-btn.active {
@@ -185,6 +185,7 @@
   color: var(--cp-text-primary);
   border-color: var(--cp-border-active);
 }
+
 /* ============================================================
    Panel Body
    ============================================================ */
@@ -432,8 +433,9 @@
    ============================================================ */
 .cp-range-selector {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
 }
 
 .cp-range-select {
@@ -468,6 +470,8 @@
 .cp-range-arrow {
   color: var(--cp-text-muted);
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
 }
 
 /* ============================================================
@@ -676,14 +680,15 @@
 .cp-cloud-bg {
   width: 100%;
   height: auto;
-  margin-bottom: -2px; /* prevent 1px gap */
-  transform: scale(1.15);
+  margin-bottom: -2px;
+  /* prevent 1px gap */
+  transform: scale(1.70);
   transform-origin: bottom center;
 }
 
 .cp-peeking-mascot {
   position: absolute;
-  bottom: 55px; 
+  bottom: 55px;
   right: 16px;
   width: 70px;
   height: auto;
@@ -698,6 +703,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -708,6 +714,7 @@
     opacity: 0;
     transform: translate(-50%, -46%);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%);
@@ -725,9 +732,11 @@
     transform: scale(0.5);
     opacity: 0;
   }
+
   70% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -735,10 +744,13 @@
 }
 
 @keyframes cp-sparkle-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.4;
     transform: scale(0.8);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.2);

@@ -232,6 +232,49 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
               <button className="cp-btn cp-btn-secondary" onClick={handleReset} style={{ marginTop: "8px" }}>
                 Export another
               </button>
+
+              <div style={{
+                marginTop: "32px",
+                padding: "16px",
+                borderRadius: "12px",
+                background: "var(--cp-bg-tertiary)",
+                border: "1px solid var(--cp-border)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "12px",
+                width: "100%",
+                maxWidth: "280px",
+                position: "relative",
+                zIndex: 10
+              }}>
+                <div style={{ fontSize: "13px", color: "var(--cp-text-secondary)", textAlign: "center", lineHeight: "1.4" }}>
+                  Find Piko helpful? Consider supporting its development! ☕
+                </div>
+                <a 
+                  href="https://buymeacoffee.com/pyrobadger" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="cp-btn"
+                  style={{ 
+                    textDecoration: "none", 
+                    width: "100%", 
+                    background: "#FFDD00", 
+                    color: "#000000", 
+                    border: "none",
+                    fontWeight: 600
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '6px' }}>
+                    <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+                    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                    <line x1="6" y1="1" x2="6" y2="4" />
+                    <line x1="10" y1="1" x2="10" y2="4" />
+                    <line x1="14" y1="1" x2="14" y2="4" />
+                  </svg>
+                  Buy me a coffee
+                </a>
+              </div>
             </div>
           ) : status === "exporting" ? (
             <div className="cp-loading">
@@ -252,7 +295,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
                     className={`cp-format-btn ${format === "raw-markdown" ? "active" : ""}`}
                     onClick={() => setFormat("raw-markdown")}
                   >
-                    <img src={getUrl(mdLogo)} alt="" width="22" height="22" style={{ objectFit: 'contain' }} />
+                    <img src={getUrl(mdLogo)} alt="" width="20" height="20" style={{ objectFit: 'contain' }} />
                     Raw Markdown
                   </button>
                   <button
@@ -278,8 +321,8 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
                       </div>
                       <div className="cp-ai-mode-desc">
                         <ul>
-                          <li>No API key required</li>
-                          <li>Uses Piko's Gemini account</li>
+                          <li>Uses Google's AI Models</li>
+                          <li>Files are temporarily uploaded to Piko's Google account. No logs are stored.</li>
                           <li style={{ color: hostedQuota === 0 ? "var(--cp-error)" : "var(--cp-success)" }}>
                             {hostedQuota !== null ? `${hostedQuota} generation${hostedQuota === 1 ? '' : 's'} remaining today` : "Loading quota..."}
                           </li>
@@ -296,9 +339,9 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
                       </div>
                       <div className="cp-ai-mode-desc">
                         <ul>
-                          <li>No Piko usage limit*</li>
-                          <li>Your Gemini API limits apply</li>
                           <li>Stored locally on this device only</li>
+                          <li>Your Files never leave you :)</li>
+                          <li style={{ fontStyle: "italic" }}>PS: Only Gemini API Keys are currently supported</li>
                         </ul>
 
                         {aiMode === "byok" && (
@@ -402,7 +445,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
         <div className="cp-decorative-bg">
           <img src={getUrl(bottomCloud)} className="cp-cloud-bg" alt="" />
         </div>
-        
+
         {/* Peeking Mascot - separated to have higher z-index than body/footer */}
         <img src={getUrl(mascotIdea)} className="cp-peeking-mascot" alt="" />
 

@@ -421,6 +421,8 @@ function getCleanInnerText(el: Element): string {
   // innerText respects rendering — hidden elements are excluded
   const text = (el as HTMLElement).innerText || el.textContent || "";
   return text
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
     .replace(/\t/g, "  ")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
@@ -447,7 +449,10 @@ function htmlToMarkdown(el: Element): string {
 
   function walk(node: Node): void {
     if (node.nodeType === Node.TEXT_NODE) {
-      parts.push(node.textContent || "");
+      // Escape HTML brackets to prevent inline HTML execution in Markdown viewers
+      let text = node.textContent || "";
+      text = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      parts.push(text);
       return;
     }
 
@@ -490,7 +495,12 @@ function htmlToMarkdown(el: Element): string {
         return;
 
       case "a": {
-        const href = element.getAttribute("href");
+        const rawHref = element.getAttribute("href") || "";
+        // Sanitize href to prevent javascript:/data: injection
+        let href = rawHref.trim();
+        if (/^(?:javascript|data|vbscript):/i.test(href)) {
+          href = "#"; // Replace unsafe links
+        }
         parts.push("[");
         walkChildren(node);
         parts.push(`](${href})`);
