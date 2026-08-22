@@ -134,8 +134,7 @@ async function generateSingle(messages: Message[], options: GenerationOptions): 
  * Call the Capy backend to generate the context using the hosted API key.
  */
 async function generateHostedContext(messages: Message[]): Promise<string> {
-  // In a real extension, this URL would point to the deployed digital ocean droplet
-  const API_URL = "http://localhost:3000/api/context/generate";
+  const API_URL = "http://64.227.144.9:3000/api/context/generate";
   
   const response = await fetch(API_URL, {
     method: "POST",
@@ -175,7 +174,7 @@ async function generateHostedContext(messages: Message[]): Promise<string> {
  * Get remaining hosted quota from the backend.
  */
 export async function getHostedQuota(): Promise<number> {
-  const API_URL = "http://localhost:3000/api/context/quota";
+  const API_URL = "http://64.227.144.9:3000/api/context/quota";
   try {
     const response = await fetch(API_URL);
     if (!response.ok) return 0;
