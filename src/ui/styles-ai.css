@@ -1,0 +1,133 @@
+/* ============================================================
+   Output Format & Settings
+   ============================================================ */
+
+.cp-format-selector {
+  display: flex;
+  background: var(--cp-bg-tertiary);
+  border-radius: var(--cp-radius-sm);
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+/* (Format button styles moved to styles.css) */
+
+.cp-ai-modes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.cp-ai-mode-card {
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cp-ai-mode-card:hover {
+  background: var(--cp-bg-hover);
+  border-color: var(--cp-border-active);
+}
+
+.cp-ai-mode-card.active {
+  background: rgba(217, 119, 87, 0.05);
+  border-color: var(--cp-accent);
+}
+
+.cp-ai-mode-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--cp-text-primary);
+  margin-bottom: 8px;
+}
+
+.cp-ai-mode-desc {
+  font-size: 12px;
+  color: var(--cp-text-secondary);
+  line-height: 1.4;
+}
+
+.cp-ai-mode-desc ul {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0 0;
+}
+
+.cp-ai-mode-desc li {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 4px;
+}
+
+.cp-ai-mode-desc li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--cp-text-muted);
+}
+
+.cp-input-group {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cp-input-group label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cp-text-secondary);
+}
+
+.cp-input-wrapper {
+  display: flex;
+  position: relative;
+}
+
+.cp-input {
+  flex: 1;
+  background: var(--cp-bg-tertiary);
+  border: 1px solid var(--cp-border);
+  color: var(--cp-text-primary);
+  padding: 10px 12px;
+  border-radius: var(--cp-radius-sm);
+  font-size: 13px;
+  font-family: monospace;
+  transition: border-color 0.15s ease;
+}
+
+.cp-input:focus {
+  outline: none;
+  border-color: var(--cp-accent);
+}
+
+.cp-input-action {
+  all: unset;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cp-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.cp-input-action:hover {
+  color: var(--cp-text-primary);
+}
+
+.cp-settings-hint {
+  font-size: 11px;
+  color: var(--cp-text-muted);
+  margin-top: 4px;
+}

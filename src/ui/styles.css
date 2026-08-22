@@ -1,0 +1,746 @@
+/**
+ * ContextPort Overlay Styles
+ *
+ * Premium dark-theme overlay panel injected into Claude.ai.
+ * Uses CSS custom properties for theming and all styles are
+ * scoped to #contextport-overlay-root to avoid conflicts.
+ */
+
+@import "./styles-ai.css";
+
+/* ============================================================
+   CSS Custom Properties (Design Tokens)
+   ============================================================ */
+#capy-overlay-root {
+  --cp-bg-primary: #121112;
+  --cp-bg-secondary: #191819;
+  --cp-bg-tertiary: #222123;
+  --cp-bg-glass: rgba(26, 26, 36, 0.85);
+  --cp-bg-hover: rgba(217, 119, 87, 0.08);
+
+  --cp-border: rgba(255, 255, 255, 0.06);
+  --cp-border-active: rgba(217, 119, 87, 0.5);
+
+  --cp-text-primary: #f0eef6;
+  --cp-text-secondary: #a8a3b8;
+  --cp-text-muted: #6b6580;
+
+  --cp-accent: #d97757;
+  --cp-accent-hover: #e88d6b;
+  --cp-accent-glow: rgba(217, 119, 87, 0.3);
+
+  --cp-success: #10B981;
+  --cp-error: #EF4444;
+  --cp-warning: #F59E0B;
+
+  --cp-radius-sm: 8px;
+  --cp-radius-md: 12px;
+  --cp-radius-lg: 16px;
+
+  --cp-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --cp-shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --cp-shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.5);
+
+  --cp-font: 'Comic Sans MS', 'Comic Sans', cursive;
+
+  /* Reset */
+  all: initial;
+  font-family: var(--cp-font);
+  color: var(--cp-text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   Backdrop
+   ============================================================ */
+.cp-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: cp-fade-in 0.2s ease-out;
+}
+
+/* ============================================================
+   Panel
+   ============================================================ */
+.cp-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10002;
+  width: 520px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 48px);
+  background: var(--cp-bg-primary);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-lg);
+  box-shadow: var(--cp-shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: cp-slide-up 0.25s ease-out;
+}
+
+/* ============================================================
+   Panel Header
+   ============================================================ */
+.cp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-bg-primary);
+  position: relative;
+  z-index: 2;
+}
+
+.cp-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cp-header-title h2 {
+  all: unset;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cp-text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.cp-header-subtitle {
+  display: block;
+  font-size: 13px;
+  color: var(--cp-text-muted);
+  margin-top: 2px;
+}
+
+.cp-header-icon {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.cp-sparkle {
+  position: absolute;
+  bottom: -2px;
+  left: -6px;
+  font-size: 12px;
+  color: var(--cp-accent);
+  animation: cp-sparkle-pulse 2s ease-in-out infinite;
+}
+
+.cp-sparkle-sm {
+  font-size: 14px;
+  color: var(--cp-accent);
+  margin-left: 4px;
+}
+
+.cp-close-btn {
+  all: unset;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--cp-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--cp-text-muted);
+  transition: all 0.15s ease;
+}
+
+.cp-close-btn:hover {
+  background: var(--cp-bg-tertiary);
+  color: var(--cp-text-primary);
+}
+
+.cp-format-btn {
+  all: unset;
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cp-text-secondary);
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cp-format-btn.active {
+  background: rgba(217, 119, 87, 0.08);
+  color: var(--cp-text-primary);
+  border-color: var(--cp-border-active);
+}
+/* ============================================================
+   Panel Body
+   ============================================================ */
+.cp-body {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.cp-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================================
+   Sections
+   ============================================================ */
+.cp-section {
+  margin-bottom: 0;
+}
+
+.cp-section:last-child {
+  margin-bottom: 0;
+}
+
+.cp-section-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cp-text-muted);
+  margin-bottom: 10px;
+}
+
+/* ============================================================
+   Radio Group
+   ============================================================ */
+.cp-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cp-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--cp-radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.cp-radio-option:hover {
+  background: var(--cp-bg-hover);
+}
+
+.cp-radio-option.active {
+  background: rgba(217, 119, 87, 0.1);
+  border-color: var(--cp-border-active);
+}
+
+.cp-radio-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--cp-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.cp-radio-option.active .cp-radio-circle {
+  border-color: var(--cp-accent);
+}
+
+.cp-radio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cp-accent);
+  transform: scale(0);
+  transition: transform 0.15s ease;
+}
+
+.cp-radio-option.active .cp-radio-dot {
+  transform: scale(1);
+}
+
+.cp-radio-label {
+  font-size: 14px;
+  color: var(--cp-text-primary);
+  font-weight: 500;
+}
+
+.cp-radio-hint {
+  font-size: 12px;
+  color: var(--cp-text-muted);
+  margin-left: auto;
+}
+
+/* ============================================================
+   Message Selector (Scrollable List)
+   ============================================================ */
+.cp-message-list {
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  background: var(--cp-bg-secondary);
+}
+
+.cp-message-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cp-message-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cp-message-list::-webkit-scrollbar-thumb {
+  background: var(--cp-bg-tertiary);
+  border-radius: 3px;
+}
+
+.cp-message-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+  border-bottom: 1px solid var(--cp-border);
+}
+
+.cp-message-item:last-child {
+  border-bottom: none;
+}
+
+.cp-message-item:hover {
+  background: var(--cp-bg-hover);
+}
+
+.cp-message-item.selected {
+  background: rgba(217, 119, 87, 0.08);
+}
+
+.cp-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid var(--cp-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.15s ease;
+}
+
+.cp-message-item.selected .cp-checkbox {
+  background: var(--cp-accent);
+  border-color: var(--cp-accent);
+}
+
+.cp-checkbox-check {
+  color: white;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.15s ease;
+}
+
+.cp-message-item.selected .cp-checkbox-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cp-message-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.cp-message-role {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.cp-message-role.user {
+  color: #60A5FA;
+}
+
+.cp-message-role.assistant {
+  color: #A78BFA;
+}
+
+.cp-message-preview {
+  font-size: 12px;
+  color: var(--cp-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cp-select-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cp-select-btn {
+  all: unset;
+  font-size: 12px;
+  color: var(--cp-accent);
+  cursor: pointer;
+  font-weight: 500;
+  padding: 4px 0;
+  transition: color 0.15s ease;
+}
+
+.cp-select-btn:hover {
+  color: var(--cp-accent-hover);
+}
+
+/* ============================================================
+   Range Selector
+   ============================================================ */
+.cp-range-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cp-range-select {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--cp-bg-secondary);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-sm);
+  color: var(--cp-text-primary);
+  font-size: 13px;
+  font-family: var(--cp-font);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b6580' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 32px;
+  transition: border-color 0.15s ease;
+}
+
+.cp-range-select:focus {
+  outline: none;
+  border-color: var(--cp-accent);
+}
+
+.cp-range-select option {
+  background: var(--cp-bg-primary);
+  color: var(--cp-text-primary);
+}
+
+.cp-range-arrow {
+  color: var(--cp-text-muted);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Status / Message Count
+   ============================================================ */
+.cp-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--cp-bg-secondary);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+}
+
+.cp-status-count {
+  font-size: 13px;
+  color: var(--cp-text-secondary);
+}
+
+.cp-status-count strong {
+  color: var(--cp-text-primary);
+  font-weight: 600;
+}
+
+.cp-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.cp-status-badge.ready {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--cp-success);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cp-status-badge.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--cp-error);
+}
+
+/* ============================================================
+   Footer / Actions
+   ============================================================ */
+.cp-footer {
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--cp-border);
+  display: flex;
+  gap: 10px;
+}
+
+.cp-btn {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--cp-radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--cp-font);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.cp-btn-primary {
+  flex: 1;
+  background: var(--cp-accent);
+  color: white;
+  border-radius: var(--cp-radius-md);
+}
+
+.cp-btn-primary:hover {
+  background: var(--cp-accent-hover);
+  transform: translateY(-1px);
+}
+
+.cp-btn-primary:active {
+  transform: translateY(0);
+}
+
+.cp-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cp-btn-secondary {
+  background: var(--cp-bg-tertiary);
+  color: var(--cp-text-primary);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+}
+
+.cp-btn-secondary:hover {
+  background: #2a292a;
+  border-color: var(--cp-border-active);
+}
+
+.cp-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ============================================================
+   Loading State
+   ============================================================ */
+.cp-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 16px;
+}
+
+.cp-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--cp-bg-tertiary);
+  border-top-color: var(--cp-accent);
+  border-radius: 50%;
+  animation: cp-spin 0.8s linear infinite;
+}
+
+.cp-loading-text {
+  font-size: 14px;
+  color: var(--cp-text-secondary);
+}
+
+/* ============================================================
+   Success State
+   ============================================================ */
+.cp-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 12px;
+}
+
+.cp-success-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cp-success);
+  animation: cp-pop 0.3s ease-out;
+}
+
+.cp-success-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cp-text-primary);
+}
+
+.cp-success-detail {
+  font-size: 13px;
+  color: var(--cp-text-secondary);
+}
+
+/* ============================================================
+   Error State
+   ============================================================ */
+.cp-error-box {
+  padding: 12px 16px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--cp-radius-sm);
+  color: var(--cp-error);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   Decorative Background & Mascot
+   ============================================================ */
+.cp-decorative-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.cp-cloud-bg {
+  width: 100%;
+  height: auto;
+  margin-bottom: -2px; /* prevent 1px gap */
+  transform: scale(1.15);
+  transform-origin: bottom center;
+}
+
+.cp-peeking-mascot {
+  position: absolute;
+  bottom: 55px; 
+  right: 16px;
+  width: 70px;
+  height: auto;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+@keyframes cp-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cp-slide-up {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes cp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cp-pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes cp-sparkle-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}

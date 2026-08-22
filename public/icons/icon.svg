@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#5B21B6"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <!-- Document shape -->
+  <path d="M42 24h28l22 22v58a4 4 0 0 1-4 4H42a4 4 0 0 1-4-4V28a4 4 0 0 1 4-4z" fill="rgba(255,255,255,0.15)"/>
+  <path d="M70 24v18a4 4 0 0 0 4 4h18" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+  <!-- Up arrow (export) -->
+  <line x1="64" y1="90" x2="64" y2="58" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <polyline points="50,72 64,58 78,72" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

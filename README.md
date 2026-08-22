@@ -1,0 +1,102 @@
+# ContextPort
+
+> Export Claude.ai conversations to clean Markdown — instantly, privately, entirely in your browser.
+
+ContextPort is a Chrome extension that lets you export any Claude.ai conversation as a well-formatted Markdown file. Select the entire conversation, pick specific messages, or choose a range.
+
+**Zero configuration required.** No accounts, no servers, no API keys for basic export.
+
+## Features
+
+- 📄 **Raw Markdown Export** — One-click export of any Claude.ai conversation
+- ✅ **Message Selection** — Export the entire conversation, selected messages, or a range
+- 📋 **Copy or Download** — Save as a `.md` file or copy directly to clipboard
+- 🔒 **Fully Private** — All processing happens locally in your browser. No data leaves your device.
+- 🎨 **Clean UI** — Premium dark-theme overlay that matches Claude's aesthetic
+
+## Install
+
+### From Source (Developer Mode)
+
+1. Clone this repo:
+   ```bash
+   git clone https://github.com/adityaraj/contextport.git
+   cd contextport
+   ```
+
+2. Install dependencies and build:
+   ```bash
+   npm install
+   npm run build
+   ```
+
+3. Load in Chrome:
+   - Open `chrome://extensions/`
+   - Enable **Developer mode** (top-right toggle)
+   - Click **Load unpacked**
+   - Select the `dist/` folder
+
+4. Navigate to any [Claude.ai](https://claude.ai) conversation
+
+5. Click the floating **Export** button in the bottom-right corner
+
+## Usage
+
+1. Open any conversation on Claude.ai
+2. Click the purple **Export** button (bottom-right)
+3. Choose your scope:
+   - **Entire conversation** — Export everything
+   - **Selected messages** — Pick specific messages with checkboxes
+   - **Range** — Choose a start and end message
+4. Click **Download .md** or **Copy** to clipboard
+
+## Privacy
+
+> Raw export happens entirely on your device. No data passes through any server operated by this project, because this project does not operate a server.
+
+## Tech Stack
+
+- **TypeScript** — Type-safe throughout
+- **React** — UI components
+- **Vite + CRXJS** — Build tooling with HMR
+- **Chrome Manifest V3** — Modern extension architecture
+
+## Project Structure
+
+```
+src/
+├── platforms/claude/   # Claude.ai DOM parsing & UI injection
+│   ├── parser.ts       # DOM → Message[] conversion
+│   ├── selectors.ts    # CSS selectors (isolated for maintainability)
+│   └── inject.ts       # Floating button injection
+├── core/               # Core logic (platform-agnostic)
+│   ├── conversation.ts # Data types
+│   ├── markdown.ts     # Markdown generator
+│   └── selection.ts    # Selection state management
+├── ui/                 # React UI components
+│   ├── ExportPanel.tsx # Main export panel
+│   ├── MessageSelector.tsx
+│   ├── OverlayApp.tsx  # Mount/unmount bridge
+│   └── styles.css      # Premium dark theme
+├── content/            # Content scripts
+│   ├── content.ts      # Main orchestrator (isolated world)
+│   └── main-world.ts   # Fetch interception (MAIN world)
+└── background/
+    └── service-worker.ts
+```
+
+## Development
+
+```bash
+# Start dev server with HMR
+npm run dev
+
+# Build for production
+npm run build
+```
+
+During development, changes to content scripts and UI components will hot-reload automatically via CRXJS.
+
+## License
+
+[MIT](LICENSE)
