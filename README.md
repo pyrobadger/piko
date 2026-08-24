@@ -111,6 +111,13 @@ npm run build
 
 During development, changes to content scripts and UI components will hot-reload automatically via CRXJS.
 
+## Credits
+
+Piko's mascot is based on [Bloubi by Jeremy Prt](https://github.com/jeremy-prt/bloub), with modifications made for Piko.
+The original [Bloubi](https://github.com/jeremy-prt/bloub) project and its source code are credited to their respective author. 
+Please see the [original repository](https://github.com/jeremy-prt/bloub) and its license for the original project's terms.
+Piko is an independent project and is not affiliated with or endorsed by the creators of Bloubi or Grok.
+
 ## License
 
 [MIT](LICENSE)
