@@ -14,7 +14,21 @@ Piko is a Chrome extension that lets you export any Claude.ai conversation as a 
 - 🔒 **Fully Private** — All processing happens locally in your browser. No data leaves your device.
 - 🎨 **Clean UI** — Premium dark-theme overlay that matches Claude's aesthetic
 
-## Install
+## *Screenshots*
+
+## Piko
+<img width="1622" height="969" alt="1" src="https://github.com/user-attachments/assets/225c8ff3-4d20-4cb2-bc98-2357b83eea3e" />
+
+## Raw Markdown
+<img width="1280" height="800" alt="piko-5" src="https://github.com/user-attachments/assets/183eee38-3d08-4d16-9518-8af9dd2404ed" />
+
+## Opimized Context.md
+<img width="1280" height="800" alt="piko-4" src="https://github.com/user-attachments/assets/69484ef3-d72d-4ab9-ab9e-b353533fc5e7" />
+
+## Bring your own key
+<img width="1280" height="800" alt="piko-7" src="https://github.com/user-attachments/assets/c394009f-51de-4558-8ada-86bca363841b" />
+
+## **Install**
 
 ### From Source (Developer Mode)
 
