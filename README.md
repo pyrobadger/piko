@@ -30,6 +30,15 @@ Piko is a Chrome extension that lets you export any Claude.ai conversation as a 
 
 ## **Install**
 
+### Direct Download (Easiest)
+
+1. Download the latest version: [piko-extension.zip](https://github.com/pyrobadger/piko/raw/main/piko-extension.zip)
+2. Extract the downloaded zip file into a folder.
+3. Open Chrome and navigate to `chrome://extensions/`
+4. Enable **Developer mode** (top-right toggle)
+5. Click **Load unpacked**
+6. Select the folder where you extracted the zip file
+
 ### From Source (Developer Mode)
 
 1. Clone this repo:
