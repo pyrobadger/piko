@@ -34,7 +34,7 @@ Piko is a Chrome extension that lets you export any Claude.ai conversation as a 
 
 1. Clone this repo:
    ```bash
-   git clone https://github.com/adityaraj/piko.git
+   git clone https://github.com/pyrobadger/piko.git
    cd piko
    ```
 
