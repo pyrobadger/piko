@@ -2,7 +2,7 @@ import { defineManifest } from "@crxjs/vite-plugin";
 
 export default defineManifest({
   manifest_version: 3,
-  name: "Piko",
+  name: "Piko — Claude Context & Markdown Exporter",
   version: "0.1.0",
   description:
     "Export Claude.ai conversations to clean Markdown. Select entire conversations, specific messages, or ranges.",
