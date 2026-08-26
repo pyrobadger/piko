@@ -92,15 +92,28 @@ Do not wrap the entire result in a Markdown code fence.
 12. Prefer concise structured information over prose.
 13. Optimize for another LLM continuing the work, not for a human reading a summary.`;
 
+const getClientIp = (req: express.Request): string => {
+  const cf = req.headers['cf-connecting-ip'];
+  if (cf) return typeof cf === 'string' ? cf.split(',')[0].trim() : cf[0];
+  
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) return typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : forwarded[0];
+  
+  const real = req.headers['x-real-ip'];
+  if (real) return typeof real === 'string' ? real.split(',')[0].trim() : real[0];
+  
+  return req.ip || req.socket.remoteAddress || 'unknown';
+};
+
 app.get('/api/context/quota', (req, res) => {
-  const ip = req.ip || req.socket.remoteAddress || 'unknown';
-  console.log(`[QUOTA CHECK] req.ip: ${req.ip}, x-forwarded-for: ${req.headers['x-forwarded-for']}, assigned IP: ${ip}`);
+  const ip = getClientIp(req);
+  console.log(`[QUOTA CHECK] req.ip: ${req.ip}, extracted IP: ${ip}`);
   const { remaining } = checkQuota(ip);
   res.json({ remaining });
 });
 
 app.post('/api/context/generate', async (req, res) => {
-  const ip = req.ip || req.socket.remoteAddress || 'unknown';
+  const ip = getClientIp(req);
   
   const { remaining, exhausted } = checkQuota(ip);
   if (exhausted) {
