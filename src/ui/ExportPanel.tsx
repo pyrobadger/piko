@@ -302,7 +302,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
                     className={`cp-format-btn ${format === "optimized-context" ? "active" : ""}`}
                     onClick={() => setFormat("optimized-context")}
                   >
-                    Optimized context.md
+                    AI Context
                     <img src={getUrl(sparkles)} alt="" width="22" className="cp-sparkle-sm" style={{ marginLeft: '4px' }} />
                   </button>
                 </div>
