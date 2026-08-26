@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+app.set('trust proxy', true); // Trust the X-Forwarded-* headers from reverse proxies
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
