@@ -251,16 +251,16 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
                 <div style={{ fontSize: "13px", color: "var(--cp-text-secondary)", textAlign: "center", lineHeight: "1.4" }}>
                   Find Piko helpful? Consider supporting its development! ☕
                 </div>
-                <a 
-                  href="https://buymeacoffee.com/pyrobadger" 
-                  target="_blank" 
+                <a
+                  href="https://buymeacoffee.com/pyrobadger"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="cp-btn"
-                  style={{ 
-                    textDecoration: "none", 
-                    width: "100%", 
-                    background: "#FFDD00", 
-                    color: "#000000", 
+                  style={{
+                    textDecoration: "none",
+                    width: "100%",
+                    background: "#FFDD00",
+                    color: "#000000",
                     border: "none",
                     fontWeight: 600
                   }}
@@ -321,8 +321,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
                       </div>
                       <div className="cp-ai-mode-desc">
                         <ul>
-                          <li>Uses Google's AI Models</li>
-                          <li>Files are temporarily uploaded to Piko's Google account. No logs are stored.</li>
+                          <li>Free! </li>
                           <li style={{ color: hostedQuota === 0 ? "var(--cp-error)" : "var(--cp-success)" }}>
                             {hostedQuota !== null ? `${hostedQuota} generation${hostedQuota === 1 ? '' : 's'} remaining today` : "Loading quota..."}
                           </li>
@@ -335,12 +334,12 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
                       onClick={() => setAiMode("byok")}
                     >
                       <div className="cp-ai-mode-header">
-                        <span>🔑 Use your own Gemini API</span>
+                        <span>🔑 Your Gemini API</span>
                       </div>
                       <div className="cp-ai-mode-desc">
                         <ul>
-                          <li>Stored locally on this device only</li>
-                          <li>Your Files never leave you :)</li>
+                          <li>Your key :)</li>
+                          <li style={{ color: "var(--cp-success)" }}>Unlimited</li>
                           <li style={{ fontStyle: "italic" }}>PS: Only Gemini API Keys are currently supported</li>
                         </ul>
 

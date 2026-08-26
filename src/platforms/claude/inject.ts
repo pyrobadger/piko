@@ -31,7 +31,7 @@ export function injectExportButton(onOpen: () => void): () => void {
   }
 
   const wrapper = document.createElement("div");
-  wrapper.innerHTML = `<cappy-button id="${BUTTON_ID}" size="120" color="claude" shape="nuage" follow-cursor="true" cycle-expressions="true" expression-interval="5"></cappy-button>`;
+  wrapper.innerHTML = `<cappy-button id="${BUTTON_ID}" size="120" color="claude" shape="nuage" follow-cursor cycle-expressions expression-interval="5"></cappy-button>`;
   const button = wrapper.firstChild as HTMLElement;
 
   // Apply minimal layout styles and a soft drop shadow

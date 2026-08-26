@@ -31,27 +31,40 @@ let panelOpen = false;
 // Main-world script communication
 // -------------------------------------------------------------------
 
-/**
- * Listen for messages from the MAIN-world script.
- */
 window.addEventListener("message", (event) => {
   if (event.source !== window) return;
   if (event.data?.type !== CONTEXTPORT_MSG_TYPE) return;
 
   const { messages } = event.data;
   if (Array.isArray(messages) && messages.length > 0) {
-    // Convert to our normalized Message type
-    interceptedMessages = messages.map(
-      (m: { role: string; content: string }, i: number) => ({
-        id: `intercepted-${i}`,
+    const mapped = messages.map(
+      (m: { role: string; content: string }) => ({
+        id: `intercepted-${Math.random().toString(36).slice(2)}`,
         role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant",
         content: m.content,
-        index: i,
+        index: 0,
       })
     );
-    console.debug(
-      `[Capy] Intercepted ${interceptedMessages.length} messages from API`
-    );
+    
+    // Merge into interceptedMessages
+    for (const newMsg of mapped) {
+      const existingIdx = interceptedMessages.findIndex(m => 
+        m.content === newMsg.content || 
+        (m.content.length > 50 && newMsg.content.includes(m.content)) ||
+        (newMsg.content.length > 50 && m.content.includes(newMsg.content))
+      );
+      
+      if (existingIdx >= 0) {
+        // Keep the longer content (useful if one is truncated or we caught a partial stream)
+        if (newMsg.content.length > interceptedMessages[existingIdx].content.length) {
+          interceptedMessages[existingIdx].content = newMsg.content;
+        }
+      } else {
+        interceptedMessages.push(newMsg);
+      }
+    }
+
+    console.debug(`[Capy] Intercepted messages updated. Total: ${interceptedMessages.length}`);
   }
 });
 
@@ -78,21 +91,35 @@ function injectMainWorldScript(): void {
  * Get the conversation messages using DOM parsing first, then fallback.
  */
 export function getConversationMessages(): Message[] {
-  // Try DOM parsing first
   const domMessages = parseConversationDOM();
-  if (domMessages.length > 0) {
-    console.debug(
-      `[Capy] Parsed ${domMessages.length} messages from DOM`
+  
+  const merged = [...interceptedMessages];
+  
+  for (const domMsg of domMessages) {
+    const existingIdx = merged.findIndex(m => 
+      m.content === domMsg.content || 
+      (m.content.length > 50 && domMsg.content.includes(m.content)) ||
+      (domMsg.content.length > 50 && m.content.includes(domMsg.content))
     );
-    return domMessages;
+    
+    if (existingIdx >= 0) {
+      if (domMsg.content.length > merged[existingIdx].content.length) {
+        merged[existingIdx].content = domMsg.content;
+      }
+    } else {
+      merged.push(domMsg);
+    }
   }
 
-  // Fallback to intercepted data
-  if (interceptedMessages.length > 0) {
-    console.debug(
-      `[Capy] Using ${interceptedMessages.length} intercepted messages (DOM parse failed)`
-    );
-    return interceptedMessages;
+  // Re-index
+  merged.forEach((m, i) => {
+    m.index = i;
+    m.id = `msg-${i}`;
+  });
+
+  if (merged.length > 0) {
+    console.debug(`[Capy] Combined ${merged.length} messages (DOM + Intercepted)`);
+    return merged;
   }
 
   console.warn("[Capy] No messages found via DOM or interception");
@@ -159,8 +186,9 @@ function observeUrlChanges(): void {
   let cleanupButton: (() => void) | null = null;
 
   const observer = new MutationObserver(() => {
-    if (window.location.href !== lastUrl) {
+      if (window.location.href !== lastUrl) {
       lastUrl = window.location.href;
+      interceptedMessages = [];
 
       // Clean up old button
       if (cleanupButton) {
