@@ -94,6 +94,7 @@ Do not wrap the entire result in a Markdown code fence.
 
 app.get('/api/context/quota', (req, res) => {
   const ip = req.ip || req.socket.remoteAddress || 'unknown';
+  console.log(`[QUOTA CHECK] req.ip: ${req.ip}, x-forwarded-for: ${req.headers['x-forwarded-for']}, assigned IP: ${ip}`);
   const { remaining } = checkQuota(ip);
   res.json({ remaining });
 });
