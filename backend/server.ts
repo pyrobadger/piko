@@ -9,6 +9,15 @@ app.set('trust proxy', true); // Trust the X-Forwarded-* headers from reverse pr
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
+// Disable caching for all API responses
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  next();
+});
+
 // Hosted daily generation limit (Phase 14)
 const HOSTED_DAILY_GENERATION_LIMIT = 1;
 
